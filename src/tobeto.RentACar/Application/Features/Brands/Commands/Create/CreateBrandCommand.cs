@@ -11,12 +11,12 @@ public class CreateBrandCommand : IRequest<CreatedBrandResponse>
     public string Logo { get; set; }
 
     //Inner class
-    public class CreareBrandCommanHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
+    public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>
     {
         private readonly IBrandRepository _brandRepository;
         private readonly IMapper _mapper;
         private readonly BrandBusinessRules _brandBusinessRules;
-        public CreareBrandCommanHandler(IBrandRepository brandRepository, IMapper mapper, BrandBusinessRules brandBusinessRules)
+        public CreateBrandCommandHandler(IBrandRepository brandRepository, IMapper mapper, BrandBusinessRules brandBusinessRules)
         {
             _brandRepository = brandRepository;
             _mapper = mapper;
