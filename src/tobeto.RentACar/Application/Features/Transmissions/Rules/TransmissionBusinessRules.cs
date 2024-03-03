@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Transmissions.Constants;
+using Application.Services.Repositories;
 using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
@@ -17,7 +18,7 @@ public class TransmissionBusinessRules : BaseBusinessRules
         Transmission? transmissionWithSameName = await _transmissionRepository.GetAsync(t => t.Name == name);
         if (transmissionWithSameName is not null)
         {
-            throw new BusinessException("Aynı isimli mevcut.");
+            throw new BusinessException(TransmissionMessages.TransmissionDontExistsSameName);
         }
     }
 }

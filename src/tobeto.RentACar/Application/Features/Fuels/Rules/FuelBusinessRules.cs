@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Fuels.Constants;
+using Application.Services.Repositories;
 using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
@@ -16,6 +17,6 @@ public class FuelBusinessRules : BaseBusinessRules
     {
         Fuel? fuelWithSamaName = await _fuelRepository.GetAsync(f => f.Name == name);
         if (fuelWithSamaName is not null)
-            throw new BusinessException("Aynı isimli mevcut.");
+            throw new BusinessException(FuelMessages.FuelDontExistsSameName);
     }
 }
