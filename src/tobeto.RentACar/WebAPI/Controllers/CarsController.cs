@@ -22,3 +22,4 @@ public class CarsController : BaseController
         GetListResponse<GetListCarItemDto> response = await Mediator.Send(query);
         return Ok(response);
     }
+}

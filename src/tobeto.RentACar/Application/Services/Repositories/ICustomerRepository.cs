@@ -1,7 +1,8 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using NArchitecture.Core.Persistence.Repositories;
 
 namespace Application.Services.Repositories;
+
 public interface ICustomerRepository : IAsyncRepository<Customer, Guid>, IRepository<Customer, Guid>
 {
 }

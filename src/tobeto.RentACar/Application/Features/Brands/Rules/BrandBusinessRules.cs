@@ -17,7 +17,7 @@ public class BrandBusinessRules : BaseBusinessRules
         Brand? brandWithSameName = await _brandRepository.GetAsync(b => b.Name == name);
         if (brandWithSameName is not null)
         {
-            throw new BusinessException(BrandMessages.CarDontExistsSameName);
+            throw new BusinessException(BrandsMessages.BrandAlreadyExists);
         }
     }
 }

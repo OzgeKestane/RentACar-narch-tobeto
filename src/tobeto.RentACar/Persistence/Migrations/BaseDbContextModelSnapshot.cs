@@ -245,7 +245,7 @@ namespace Persistence.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("InvidualCustomers", (string)null);
+                    b.ToTable("IndividualCustomers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Model", b =>
@@ -475,6 +475,114 @@ namespace Persistence.Migrations
                             Id = 23,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Users.Delete"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Customers.Admin"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Customers.Read"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Customers.Write"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Customers.Create"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Customers.Update"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Customers.Delete"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "CorporateCustomers.Admin"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "CorporateCustomers.Read"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "CorporateCustomers.Write"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "CorporateCustomers.Create"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "CorporateCustomers.Update"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "CorporateCustomers.Delete"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "IndividualCustomers.Admin"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "IndividualCustomers.Read"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "IndividualCustomers.Write"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "IndividualCustomers.Create"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "IndividualCustomers.Update"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "IndividualCustomers.Delete"
                         });
                 });
 
@@ -646,12 +754,12 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7e1d412e-8e9b-468c-9f20-77b5c35efe63"),
+                            Id = new Guid("eb5adabf-3b26-40d0-bdc8-3fe15ec064fb"),
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "narch@kodlama.io",
-                            PasswordHash = new byte[] { 236, 254, 52, 238, 253, 214, 16, 48, 195, 29, 235, 32, 147, 15, 214, 187, 211, 175, 61, 144, 235, 123, 65, 201, 217, 53, 150, 40, 18, 228, 212, 52, 97, 11, 105, 241, 153, 140, 245, 12, 33, 140, 215, 188, 86, 96, 83, 251, 166, 206, 100, 250, 74, 13, 239, 206, 198, 140, 212, 219, 117, 41, 235, 172 },
-                            PasswordSalt = new byte[] { 157, 72, 59, 238, 124, 208, 255, 212, 201, 19, 86, 105, 37, 20, 160, 24, 249, 144, 255, 125, 165, 139, 86, 9, 183, 244, 165, 186, 186, 96, 222, 100, 33, 63, 28, 90, 251, 24, 104, 14, 122, 242, 35, 108, 91, 21, 72, 132, 4, 42, 2, 175, 36, 55, 100, 97, 92, 166, 78, 234, 84, 234, 105, 36, 122, 201, 221, 29, 115, 3, 76, 134, 18, 85, 119, 121, 135, 228, 105, 145, 100, 189, 183, 75, 218, 241, 164, 139, 151, 53, 50, 211, 76, 227, 198, 227, 97, 75, 113, 67, 54, 157, 185, 30, 60, 135, 9, 147, 37, 44, 250, 87, 130, 223, 62, 4, 92, 32, 158, 235, 220, 23, 173, 31, 255, 110, 141, 207 }
+                            PasswordHash = new byte[] { 163, 160, 248, 90, 118, 253, 244, 120, 39, 42, 214, 112, 47, 203, 15, 37, 209, 35, 96, 83, 242, 247, 131, 73, 178, 41, 213, 189, 32, 80, 206, 155, 205, 2, 178, 1, 213, 6, 220, 69, 230, 128, 22, 31, 127, 9, 7, 186, 189, 85, 156, 61, 109, 108, 15, 142, 197, 111, 151, 1, 165, 109, 88, 93 },
+                            PasswordSalt = new byte[] { 141, 150, 100, 78, 28, 103, 237, 66, 133, 10, 188, 110, 226, 59, 161, 239, 14, 250, 228, 231, 196, 126, 212, 51, 79, 222, 122, 120, 219, 43, 199, 204, 200, 254, 107, 11, 114, 126, 14, 150, 239, 27, 120, 219, 124, 82, 59, 7, 8, 36, 210, 216, 234, 202, 148, 121, 57, 141, 224, 143, 81, 34, 85, 192, 237, 56, 13, 30, 254, 35, 56, 136, 203, 213, 86, 95, 242, 230, 39, 151, 111, 162, 210, 25, 255, 54, 199, 190, 163, 156, 123, 203, 132, 2, 113, 247, 185, 77, 231, 196, 45, 130, 17, 12, 33, 140, 88, 130, 67, 176, 152, 54, 27, 247, 240, 255, 202, 29, 32, 4, 185, 65, 188, 74, 193, 75, 48, 39 }
                         });
                 });
 
@@ -693,10 +801,10 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("417eb593-cd39-4357-af64-f9719cbe624c"),
+                            Id = new Guid("02f089fe-09ea-4fc0-9e93-57b95415eee2"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("7e1d412e-8e9b-468c-9f20-77b5c35efe63")
+                            UserId = new Guid("eb5adabf-3b26-40d0-bdc8-3fe15ec064fb")
                         });
                 });
 
@@ -712,7 +820,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.CorporateCustomer", b =>
                 {
                     b.HasOne("Domain.Entities.Customer", "Customer")
-                        .WithOne("CorporateCustomers")
+                        .WithOne("CorporateCustomer")
                         .HasForeignKey("Domain.Entities.CorporateCustomer", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -743,7 +851,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.IndividualCustomer", b =>
                 {
                     b.HasOne("Domain.Entities.Customer", "Customer")
-                        .WithOne("IndividualCustomers")
+                        .WithOne("IndividualCustomer")
                         .HasForeignKey("Domain.Entities.IndividualCustomer", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -829,9 +937,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
                 {
-                    b.Navigation("CorporateCustomers");
+                    b.Navigation("CorporateCustomer");
 
-                    b.Navigation("IndividualCustomers");
+                    b.Navigation("IndividualCustomer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Fuel", b =>

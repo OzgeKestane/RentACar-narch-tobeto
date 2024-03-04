@@ -1,18 +1,22 @@
-ï»¿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfigurations;
+
 public class IndividualCustomerConfiguration : IEntityTypeConfiguration<IndividualCustomer>
 {
     public void Configure(EntityTypeBuilder<IndividualCustomer> builder)
     {
-        builder.HasKey(i => i.Id);//PK->Id
-        builder.ToTable("InvidualCustomers");//Hangi veritabanÄ± tablosuyla eÅŸleÅŸeceÄŸini belirt
+        builder.HasKey(ic => ic.Id);
+        builder.ToTable("IndividualCustomers");
+        //her bir IndividualCustomer kaydýnýn bir müþteriye (yani bir Customer kaydýna) baðlý olmasý gerektiðini belirtir. 
+        builder.Property(ic => ic.CustomerId)
+               .IsRequired();//.IsRequired() bu özelliðin(CustomerId) NULL olamayacaðýný yani  her zaman bir deðere sahip olmasý gerektiðini belirtir.
 
-        //InvidualCustomer - Customer iliÅŸkisini belirt
-        builder.HasOne(c => c.Customer)//bir KurumsalMÃ¼ÅŸteri yalnÄ±zca bir mÃ¼ÅŸteri(customer) aittir 
-               .WithOne(c => c.IndividualCustomers)//bir mÃ¼ÅŸteri(Customer) yalnÄ±zca bir KurumsalMÃ¼ÅŸteri aittir 
-               .HasForeignKey<IndividualCustomer>(c => c.CustomerId); //FK->CustomerId InvidualCustomer'Ä±n baÄŸÄ±mlÄ± taraf olduÄŸunu belirt
+        //InvidualCustomer - Customer iliþkisini belirt
+        builder.HasOne(ic => ic.Customer)//bir KurumsalMüþteri yalnýzca bir müþteri(customer) aittir 
+               .WithOne(c => c.IndividualCustomer)//bir müþteri(Customer) yalnýzca bir KurumsalMüþteri aittir 
+               .HasForeignKey<IndividualCustomer>(ic => ic.CustomerId);//FK->CustomerId InvidualCustomer'ýn baðýmlý taraf olduðunu belirt
     }
 }
