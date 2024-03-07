@@ -1,29 +1,16 @@
-using Application.Features.CorporateCustomers.Constants;
 using Application.Features.CorporateCustomers.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Application.Pipelines.Caching;
-using NArchitecture.Core.Application.Pipelines.Logging;
-using static Application.Features.CorporateCustomers.Constants.CorporateCustomersOperationClaims;
 
 namespace Application.Features.CorporateCustomers.Commands.Update;
 
-public class UpdateCorporateCustomerCommand : IRequest<UpdatedCorporateCustomerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class UpdateCorporateCustomerCommand : IRequest<UpdatedCorporateCustomerResponse>
 {
     public Guid Id { get; set; }
-    public Guid CustomerId { get; set; }
-    public string CompanyName { get; set; }
     public string TaxNo { get; set; }
-    public Customer? Customer { get; set; }
-
-    public string[] Roles => [Admin, Write, CorporateCustomersOperationClaims.Update];
-
-    public bool BypassCache { get; }
-    public string? CacheKey { get; }
-    public string[]? CacheGroupKey => ["GetCorporateCustomers"];
+    public Guid CustomerId { get; set; }
 
     public class UpdateCorporateCustomerCommandHandler : IRequestHandler<UpdateCorporateCustomerCommand, UpdatedCorporateCustomerResponse>
     {

@@ -1,47 +1,51 @@
-using Application.Features.CorporateCustomers.Constants;
 using Application.Features.CorporateCustomers.Rules;
+using Application.Services.AuthService;
+using Application.Services.Customers;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Application.Pipelines.Caching;
-using NArchitecture.Core.Application.Pipelines.Logging;
-using static Application.Features.CorporateCustomers.Constants.CorporateCustomersOperationClaims;
+using NArchitecture.Core.Application.Dtos;
+using NArchitecture.Core.Application.Pipelines.Transaction;
 
 namespace Application.Features.CorporateCustomers.Commands.Create;
 
-public class CreateCorporateCustomerCommand : IRequest<CreatedCorporateCustomerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class CreateCorporateCustomerCommand : IRequest<CreatedCorporateCustomerResponse>, ITransactionalRequest
 {
-
-    public Guid CustomerId { get; set; }
-    public string CompanyName { get; set; }
     public string TaxNo { get; set; }
-    public Customer? Customer { get; set; }
-
-    public string[] Roles => [Admin, Write, CorporateCustomersOperationClaims.Create];
-
-    public bool BypassCache { get; }
-    public string? CacheKey { get; }
-    public string[]? CacheGroupKey => ["GetCorporateCustomers"];
+    public string Email { get; set; }
+    public string Password { get; set; }
+    //public Guid CustomerId { get; set; }
 
     public class CreateCorporateCustomerCommandHandler : IRequestHandler<CreateCorporateCustomerCommand, CreatedCorporateCustomerResponse>
     {
         private readonly IMapper _mapper;
         private readonly ICorporateCustomerRepository _corporateCustomerRepository;
         private readonly CorporateCustomerBusinessRules _corporateCustomerBusinessRules;
-
+        private readonly IAuthService _authService;
+        private readonly ICustomerService _customerService;
         public CreateCorporateCustomerCommandHandler(IMapper mapper, ICorporateCustomerRepository corporateCustomerRepository,
-                                         CorporateCustomerBusinessRules corporateCustomerBusinessRules)
+                                         CorporateCustomerBusinessRules corporateCustomerBusinessRules, IAuthService authService, ICustomerService customerService)
         {
             _mapper = mapper;
             _corporateCustomerRepository = corporateCustomerRepository;
             _corporateCustomerBusinessRules = corporateCustomerBusinessRules;
+            _authService = authService;
+            _customerService = customerService;
         }
 
         public async Task<CreatedCorporateCustomerResponse> Handle(CreateCorporateCustomerCommand request, CancellationToken cancellationToken)
         {
+            User user = await _authService.Register(new UserForRegisterDto() { Email = request.Email, Password = request.Password });
+
+            Customer customer = await _customerService.AddAsync(new Customer()
+            {
+                UserId = user.Id,
+                CustomerNo = new Random().Next(1111, 9999).ToString()
+            });
+
             CorporateCustomer corporateCustomer = _mapper.Map<CorporateCustomer>(request);
+            corporateCustomer.CustomerId = customer.Id;
 
             await _corporateCustomerRepository.AddAsync(corporateCustomer);
 

@@ -62,6 +62,7 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int>();
 
+
         services.AddScoped<ICustomerService, CustomerManager>();
         services.AddScoped<ICorporateCustomerService, CorporateCustomerManager>();
         services.AddScoped<IIndividualCustomerService, IndividualCustomerManager>();

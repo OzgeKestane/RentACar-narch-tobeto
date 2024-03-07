@@ -1,27 +1,16 @@
-using Application.Features.IndividualCustomers.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
-using static Application.Features.IndividualCustomers.Constants.IndividualCustomersOperationClaims;
 
 namespace Application.Features.IndividualCustomers.Queries.GetList;
 
-public class GetListIndividualCustomerQuery : IRequest<GetListResponse<GetListIndividualCustomerListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListIndividualCustomerQuery : IRequest<GetListResponse<GetListIndividualCustomerListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
-
-    public string[] Roles => [Admin, Read];
-
-    public bool BypassCache { get; }
-    public string? CacheKey => $"GetListIndividualCustomers({PageRequest.PageIndex},{PageRequest.PageSize})";
-    public string? CacheGroupKey => "GetIndividualCustomers";
-    public TimeSpan? SlidingExpiration { get; }
 
     public class GetListIndividualCustomerQueryHandler : IRequestHandler<GetListIndividualCustomerQuery, GetListResponse<GetListIndividualCustomerListItemDto>>
     {

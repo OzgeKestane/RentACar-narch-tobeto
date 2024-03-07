@@ -6,11 +6,7 @@ public class CreateIndividualCustomerCommandValidator : AbstractValidator<Create
 {
     public CreateIndividualCustomerCommandValidator()
     {
-        RuleFor(c => c.FirstName).NotEmpty();
-        RuleFor(c => c.LastName).NotEmpty();
         RuleFor(c => c.NationalIdentity).NotEmpty();
         RuleFor(c => c.CustomerId).NotEmpty();
-        RuleFor(c => c.CustomerId).NotEmpty();
-        RuleFor(c => c.Customer).NotEmpty();
     }
 }

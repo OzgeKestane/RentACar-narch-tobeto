@@ -7,11 +7,7 @@ public class UpdateIndividualCustomerCommandValidator : AbstractValidator<Update
     public UpdateIndividualCustomerCommandValidator()
     {
         RuleFor(c => c.Id).NotEmpty();
-        RuleFor(c => c.FirstName).NotEmpty();
-        RuleFor(c => c.LastName).NotEmpty();
         RuleFor(c => c.NationalIdentity).NotEmpty();
         RuleFor(c => c.CustomerId).NotEmpty();
-        RuleFor(c => c.CustomerId).NotEmpty();
-        RuleFor(c => c.Customer).NotEmpty();
     }
 }

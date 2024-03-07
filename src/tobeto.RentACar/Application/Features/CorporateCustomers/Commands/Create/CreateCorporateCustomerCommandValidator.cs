@@ -6,10 +6,9 @@ public class CreateCorporateCustomerCommandValidator : AbstractValidator<CreateC
 {
     public CreateCorporateCustomerCommandValidator()
     {
-        RuleFor(c => c.CustomerId).NotEmpty();
-        RuleFor(c => c.CustomerId).NotEmpty();
-        RuleFor(c => c.CompanyName).NotEmpty();
         RuleFor(c => c.TaxNo).NotEmpty();
-        RuleFor(c => c.Customer).NotEmpty();
+        RuleFor(c => c.Email).NotEmpty().EmailAddress();
+        RuleFor(c => c.Password).NotEmpty().MinimumLength(4);
+
     }
 }

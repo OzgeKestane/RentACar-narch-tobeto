@@ -1,27 +1,16 @@
-using Application.Features.CorporateCustomers.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
-using static Application.Features.CorporateCustomers.Constants.CorporateCustomersOperationClaims;
 
 namespace Application.Features.CorporateCustomers.Queries.GetList;
 
-public class GetListCorporateCustomerQuery : IRequest<GetListResponse<GetListCorporateCustomerListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListCorporateCustomerQuery : IRequest<GetListResponse<GetListCorporateCustomerListItemDto>>
 {
     public PageRequest PageRequest { get; set; }
-
-    public string[] Roles => [Admin, Read];
-
-    public bool BypassCache { get; }
-    public string? CacheKey => $"GetListCorporateCustomers({PageRequest.PageIndex},{PageRequest.PageSize})";
-    public string? CacheGroupKey => "GetCorporateCustomers";
-    public TimeSpan? SlidingExpiration { get; }
 
     public class GetListCorporateCustomerQueryHandler : IRequestHandler<GetListCorporateCustomerQuery, GetListResponse<GetListCorporateCustomerListItemDto>>
     {

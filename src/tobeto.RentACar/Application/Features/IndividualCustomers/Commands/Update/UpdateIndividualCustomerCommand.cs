@@ -1,30 +1,16 @@
-using Application.Features.IndividualCustomers.Constants;
 using Application.Features.IndividualCustomers.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Application.Pipelines.Caching;
-using NArchitecture.Core.Application.Pipelines.Transaction;
-using static Application.Features.IndividualCustomers.Constants.IndividualCustomersOperationClaims;
 
 namespace Application.Features.IndividualCustomers.Commands.Update;
 
-public class UpdateIndividualCustomerCommand : IRequest<UpdatedIndividualCustomerResponse>, ISecuredRequest, ICacheRemoverRequest, ITransactionalRequest
+public class UpdateIndividualCustomerCommand : IRequest<UpdatedIndividualCustomerResponse>
 {
     public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
     public string NationalIdentity { get; set; }
     public Guid CustomerId { get; set; }
-    public Customer? Customer { get; set; }
-
-    public string[] Roles => [Admin, Write, IndividualCustomersOperationClaims.Update];
-
-    public bool BypassCache { get; }
-    public string? CacheKey { get; }
-    public string[]? CacheGroupKey => ["GetIndividualCustomers"];
 
     public class UpdateIndividualCustomerCommandHandler : IRequestHandler<UpdateIndividualCustomerCommand, UpdatedIndividualCustomerResponse>
     {

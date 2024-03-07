@@ -8,15 +8,20 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
-        builder.HasKey(c => c.Id);//PK->Id
-        builder.ToTable("Customers");//Hangi veritabaný tablosuyla eþleþeceðini belirt
-                                     // Customer - IndividualCustomer iliþkisini belirt//
-        builder.HasOne(c => c.IndividualCustomer)
-               .WithOne(ic => ic.Customer)
-               .HasForeignKey<IndividualCustomer>(ic => ic.CustomerId);// Customer'ýn baðýmlý taraf olduðunu belirt
-                                                                       // Customer - CorporateCustomer iliþkisini belirt//
-        builder.HasOne(c => c.CorporateCustomer)
-               .WithOne(cc => cc.Customer)
-               .HasForeignKey<CorporateCustomer>(cc => cc.CustomerId);
+        builder.ToTable("Customers").HasKey(c => c.Id);
+
+        builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
+        builder.Property(c => c.CustomerNo).HasColumnName("CustomerNo");
+        builder.Property(c => c.UserId).HasColumnName("UserId");
+        builder.Property(c => c.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+        builder.Property(c => c.UpdatedDate).HasColumnName("UpdatedDate");
+        builder.Property(c => c.DeletedDate).HasColumnName("DeletedDate");
+        builder.HasIndex(indexExpression: c => c.UserId, name: "Customer_UserID_UK").IsUnique();
+        builder.HasOne(c => c.User);
+        builder.HasOne(c => c.IndividualCustomer);
+        builder.HasOne(c => c.CorporateCustomer);
+
+
+        builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
     }
 }

@@ -8,16 +8,19 @@ public class CorporateCustomerConfiguration : IEntityTypeConfiguration<Corporate
 {
     public void Configure(EntityTypeBuilder<CorporateCustomer> builder)
     {
-        builder.HasKey(cc => cc.Id);//PK->Id
-        builder.ToTable("CorporateCustomers");//CorporateCustomer entity'sinin hangi tabloyla eþleþeceðini belirt
+        builder.ToTable("CorporateCustomers").HasKey(cc => cc.Id);
 
-        //her bir CorporateCustomer kaydýnýn bir müþteriye (yani bir Customer kaydýna) baðlý olmasý gerektiðini belirtir. 
-        builder.Property(cc => cc.CustomerId)
-               .IsRequired();//.IsRequired() bu özelliðin(CustomerId) NULL olamayacaðýný yani  her zaman bir deðere sahip olmasý gerektiðini belirtir.
+        builder.Property(cc => cc.Id).HasColumnName("Id").IsRequired();
+        builder.Property(cc => cc.TaxNo).HasColumnName("TaxNo");
+        builder.Property(cc => cc.CustomerId).HasColumnName("CustomerId");
+        builder.Property(cc => cc.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+        builder.Property(cc => cc.UpdatedDate).HasColumnName("UpdatedDate");
+        builder.Property(cc => cc.DeletedDate).HasColumnName("DeletedDate");
 
+        builder.HasIndex(indexExpression: c => c.CustomerId, name: "CorporateCustomer_CustomerID_UK").IsUnique();
 
-        builder.HasOne(cc => cc.Customer)//bir BireyselMüþteri yalnýzca bir müþteri(customer) aittir 
-               .WithOne(c => c.CorporateCustomer)//bir müþteri(Customer) yalnýzca bir BireyselMüþteri aittir
-               .HasForeignKey<CorporateCustomer>(cc => cc.CustomerId);//FK->CustomerId,CorporateCustomer'ýn baðýmlý taraf olduðunu belirt
+        builder.HasOne(c => c.Customer);
+
+        builder.HasQueryFilter(cc => !cc.DeletedDate.HasValue);
     }
 }

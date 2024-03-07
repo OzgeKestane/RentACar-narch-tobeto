@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,14 +8,22 @@
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class CustomersAdd : Migration
+    public partial class AddCustomers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_Customers_Users_UserId",
+                table: "Customers");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_InvidualCustomers_Customers_CustomerId",
                 table: "InvidualCustomers");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Customers_UserId",
+                table: "Customers");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_InvidualCustomers",
@@ -30,14 +39,47 @@ namespace Persistence.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("7e1d412e-8e9b-468c-9f20-77b5c35efe63"));
 
+            migrationBuilder.DropColumn(
+                name: "CompanyName",
+                table: "CorporateCustomers");
+
+            migrationBuilder.DropColumn(
+                name: "FirstName",
+                table: "InvidualCustomers");
+
+            migrationBuilder.DropColumn(
+                name: "LastName",
+                table: "InvidualCustomers");
+
             migrationBuilder.RenameTable(
                 name: "InvidualCustomers",
                 newName: "IndividualCustomers");
 
             migrationBuilder.RenameIndex(
+                name: "IX_CorporateCustomers_CustomerId",
+                table: "CorporateCustomers",
+                newName: "CorporateCustomer_CustomerID_UK");
+
+            migrationBuilder.RenameIndex(
                 name: "IX_InvidualCustomers_CustomerId",
                 table: "IndividualCustomers",
-                newName: "IX_IndividualCustomers_CustomerId");
+                newName: "IndividualCustomer_CustomerID_UK");
+
+            migrationBuilder.AlterColumn<Guid>(
+                name: "UserId",
+                table: "Customers",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier",
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "CustomerNo",
+                table: "Customers",
+                type: "nvarchar(max)",
+                nullable: true);
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_IndividualCustomers",
@@ -72,12 +114,26 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "PasswordHash", "PasswordSalt", "UpdatedDate" },
-                values: new object[] { new Guid("eb5adabf-3b26-40d0-bdc8-3fe15ec064fb"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 163, 160, 248, 90, 118, 253, 244, 120, 39, 42, 214, 112, 47, 203, 15, 37, 209, 35, 96, 83, 242, 247, 131, 73, 178, 41, 213, 189, 32, 80, 206, 155, 205, 2, 178, 1, 213, 6, 220, 69, 230, 128, 22, 31, 127, 9, 7, 186, 189, 85, 156, 61, 109, 108, 15, 142, 197, 111, 151, 1, 165, 109, 88, 93 }, new byte[] { 141, 150, 100, 78, 28, 103, 237, 66, 133, 10, 188, 110, 226, 59, 161, 239, 14, 250, 228, 231, 196, 126, 212, 51, 79, 222, 122, 120, 219, 43, 199, 204, 200, 254, 107, 11, 114, 126, 14, 150, 239, 27, 120, 219, 124, 82, 59, 7, 8, 36, 210, 216, 234, 202, 148, 121, 57, 141, 224, 143, 81, 34, 85, 192, 237, 56, 13, 30, 254, 35, 56, 136, 203, 213, 86, 95, 242, 230, 39, 151, 111, 162, 210, 25, 255, 54, 199, 190, 163, 156, 123, 203, 132, 2, 113, 247, 185, 77, 231, 196, 45, 130, 17, 12, 33, 140, 88, 130, 67, 176, 152, 54, 27, 247, 240, 255, 202, 29, 32, 4, 185, 65, 188, 74, 193, 75, 48, 39 }, null });
+                values: new object[] { new Guid("3fab908a-74f4-4c30-aad1-bfa27e349892"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 58, 71, 16, 216, 66, 55, 141, 188, 167, 3, 142, 132, 128, 138, 188, 107, 3, 157, 213, 111, 38, 172, 226, 194, 202, 99, 155, 198, 252, 114, 28, 63, 51, 134, 177, 92, 2, 89, 44, 99, 28, 139, 202, 74, 234, 151, 99, 74, 167, 109, 180, 118, 136, 244, 133, 171, 0, 45, 95, 207, 190, 29, 134, 219 }, new byte[] { 176, 244, 14, 181, 42, 113, 6, 38, 127, 4, 204, 103, 191, 90, 131, 107, 76, 229, 29, 232, 15, 150, 80, 106, 214, 88, 226, 118, 98, 122, 25, 131, 105, 53, 9, 129, 166, 60, 161, 70, 130, 167, 66, 174, 204, 10, 86, 8, 178, 23, 199, 171, 98, 13, 175, 131, 245, 103, 83, 46, 159, 121, 63, 42, 198, 189, 245, 42, 102, 127, 226, 43, 40, 55, 233, 253, 104, 135, 12, 128, 230, 88, 208, 225, 155, 48, 215, 163, 149, 32, 224, 250, 16, 200, 244, 39, 36, 86, 165, 169, 122, 133, 92, 0, 0, 158, 58, 38, 22, 142, 100, 214, 87, 236, 252, 167, 228, 131, 191, 97, 92, 139, 24, 77, 66, 69, 221, 209 }, null });
 
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("02f089fe-09ea-4fc0-9e93-57b95415eee2"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("eb5adabf-3b26-40d0-bdc8-3fe15ec064fb") });
+                values: new object[] { new Guid("7d5070e7-a39b-4663-9c1c-a2fc0e750e5d"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("3fab908a-74f4-4c30-aad1-bfa27e349892") });
+
+            migrationBuilder.CreateIndex(
+                name: "Customer_UserID_UK",
+                table: "Customers",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Customers_Users_UserId",
+                table: "Customers",
+                column: "UserId",
+                principalTable: "Users",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_IndividualCustomers_Customers_CustomerId",
@@ -92,8 +148,16 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_Customers_Users_UserId",
+                table: "Customers");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_IndividualCustomers_Customers_CustomerId",
                 table: "IndividualCustomers");
+
+            migrationBuilder.DropIndex(
+                name: "Customer_UserID_UK",
+                table: "Customers");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_IndividualCustomers",
@@ -192,21 +256,59 @@ namespace Persistence.Migrations
             migrationBuilder.DeleteData(
                 table: "UserOperationClaims",
                 keyColumn: "Id",
-                keyValue: new Guid("02f089fe-09ea-4fc0-9e93-57b95415eee2"));
+                keyValue: new Guid("7d5070e7-a39b-4663-9c1c-a2fc0e750e5d"));
 
             migrationBuilder.DeleteData(
                 table: "Users",
                 keyColumn: "Id",
-                keyValue: new Guid("eb5adabf-3b26-40d0-bdc8-3fe15ec064fb"));
+                keyValue: new Guid("3fab908a-74f4-4c30-aad1-bfa27e349892"));
+
+            migrationBuilder.DropColumn(
+                name: "CustomerNo",
+                table: "Customers");
 
             migrationBuilder.RenameTable(
                 name: "IndividualCustomers",
                 newName: "InvidualCustomers");
 
             migrationBuilder.RenameIndex(
-                name: "IX_IndividualCustomers_CustomerId",
+                name: "CorporateCustomer_CustomerID_UK",
+                table: "CorporateCustomers",
+                newName: "IX_CorporateCustomers_CustomerId");
+
+            migrationBuilder.RenameIndex(
+                name: "IndividualCustomer_CustomerID_UK",
                 table: "InvidualCustomers",
                 newName: "IX_InvidualCustomers_CustomerId");
+
+            migrationBuilder.AlterColumn<Guid>(
+                name: "UserId",
+                table: "Customers",
+                type: "uniqueidentifier",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier");
+
+            migrationBuilder.AddColumn<string>(
+                name: "CompanyName",
+                table: "CorporateCustomers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "FirstName",
+                table: "InvidualCustomers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "LastName",
+                table: "InvidualCustomers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_InvidualCustomers",
@@ -222,6 +324,18 @@ namespace Persistence.Migrations
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
                 values: new object[] { new Guid("417eb593-cd39-4357-af64-f9719cbe624c"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("7e1d412e-8e9b-468c-9f20-77b5c35efe63") });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_UserId",
+                table: "Customers",
+                column: "UserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Customers_Users_UserId",
+                table: "Customers",
+                column: "UserId",
+                principalTable: "Users",
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_InvidualCustomers_Customers_CustomerId",

@@ -1,26 +1,15 @@
 using Application.Features.CorporateCustomers.Constants;
-using Application.Features.CorporateCustomers.Constants;
 using Application.Features.CorporateCustomers.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
-using NArchitecture.Core.Application.Pipelines.Caching;
-using NArchitecture.Core.Application.Pipelines.Logging;
 using MediatR;
-using static Application.Features.CorporateCustomers.Constants.CorporateCustomersOperationClaims;
 
 namespace Application.Features.CorporateCustomers.Commands.Delete;
 
-public class DeleteCorporateCustomerCommand : IRequest<DeletedCorporateCustomerResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest
+public class DeleteCorporateCustomerCommand : IRequest<DeletedCorporateCustomerResponse>
 {
     public Guid Id { get; set; }
-
-    public string[] Roles => [Admin, Write, CorporateCustomersOperationClaims.Delete];
-
-    public bool BypassCache { get; }
-    public string? CacheKey { get; }
-    public string[]? CacheGroupKey => ["GetCorporateCustomers"];
 
     public class DeleteCorporateCustomerCommandHandler : IRequestHandler<DeleteCorporateCustomerCommand, DeletedCorporateCustomerResponse>
     {

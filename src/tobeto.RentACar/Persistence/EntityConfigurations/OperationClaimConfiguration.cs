@@ -104,6 +104,14 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
 
 
 
+
+
+
+
+
+
+
+
         
         #region Customers
         featureOperationClaims.AddRange(

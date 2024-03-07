@@ -8,15 +8,18 @@ public class IndividualCustomerConfiguration : IEntityTypeConfiguration<Individu
 {
     public void Configure(EntityTypeBuilder<IndividualCustomer> builder)
     {
-        builder.HasKey(ic => ic.Id);
-        builder.ToTable("IndividualCustomers");
-        //her bir IndividualCustomer kaydýnýn bir müþteriye (yani bir Customer kaydýna) baðlý olmasý gerektiðini belirtir. 
-        builder.Property(ic => ic.CustomerId)
-               .IsRequired();//.IsRequired() bu özelliðin(CustomerId) NULL olamayacaðýný yani  her zaman bir deðere sahip olmasý gerektiðini belirtir.
+        builder.ToTable("IndividualCustomers").HasKey(ic => ic.Id);
 
-        //InvidualCustomer - Customer iliþkisini belirt
-        builder.HasOne(ic => ic.Customer)//bir KurumsalMüþteri yalnýzca bir müþteri(customer) aittir 
-               .WithOne(c => c.IndividualCustomer)//bir müþteri(Customer) yalnýzca bir KurumsalMüþteri aittir 
-               .HasForeignKey<IndividualCustomer>(ic => ic.CustomerId);//FK->CustomerId InvidualCustomer'ýn baðýmlý taraf olduðunu belirt
+        builder.Property(ic => ic.Id).HasColumnName("Id").IsRequired();
+        builder.Property(ic => ic.NationalIdentity).HasColumnName("NationalIdentity");
+        builder.Property(ic => ic.CustomerId).HasColumnName("CustomerId");
+        builder.Property(ic => ic.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+        builder.Property(ic => ic.UpdatedDate).HasColumnName("UpdatedDate");
+        builder.Property(ic => ic.DeletedDate).HasColumnName("DeletedDate");
+        builder.HasIndex(indexExpression: c => c.CustomerId, name: "IndividualCustomer_CustomerID_UK").IsUnique();
+
+        builder.HasOne(c => c.Customer);
+
+        builder.HasQueryFilter(ic => !ic.DeletedDate.HasValue);
     }
 }
