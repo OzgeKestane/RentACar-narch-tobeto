@@ -1,13 +1,18 @@
-﻿using Application.Features.Transmissions.Rules;
+﻿using Application.Features.Transmissions.Constants;
+using Application.Features.Transmissions.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Application.Pipelines.Logging;
 
 namespace Application.Features.Transmissions.Commands.Create;
-public class CreateTransmissionCommand : IRequest<CreatedTransmissionResponse>
+public class CreateTransmissionCommand : IRequest<CreatedTransmissionResponse>, ISecuredRequest, ILoggableRequest
 {
     public string Name { get; set; }
+
+    public string[] Roles => new string[] { TransmissionsOperationClaims.Create, TransmissionsOperationClaims.Write };
 
     public class CreateTransmissionCommandHandler : IRequestHandler<CreateTransmissionCommand, CreatedTransmissionResponse>
     {
