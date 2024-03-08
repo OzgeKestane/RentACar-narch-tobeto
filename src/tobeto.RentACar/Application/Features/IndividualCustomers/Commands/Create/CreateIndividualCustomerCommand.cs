@@ -1,15 +1,20 @@
+using Application.Features.IndividualCustomers.Constants;
 using Application.Features.IndividualCustomers.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Application.Pipelines.Logging;
 
 namespace Application.Features.IndividualCustomers.Commands.Create;
 
-public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustomerResponse>
+public class CreateIndividualCustomerCommand : IRequest<CreatedIndividualCustomerResponse>, ISecuredRequest, ILoggableRequest
 {
     public string NationalIdentity { get; set; }
     public Guid CustomerId { get; set; }
+
+    public string[] Roles => new string[] { IndividualCustomersOperationClaims.Create, IndividualCustomersOperationClaims.Write };
 
     public class CreateIndividualCustomerCommandHandler : IRequestHandler<CreateIndividualCustomerCommand, CreatedIndividualCustomerResponse>
     {

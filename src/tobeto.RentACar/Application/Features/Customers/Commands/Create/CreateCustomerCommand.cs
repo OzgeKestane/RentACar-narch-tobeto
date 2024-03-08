@@ -1,15 +1,20 @@
+using Application.Features.Customers.Constants;
 using Application.Features.Customers.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
+using NArchitecture.Core.Application.Pipelines.Logging;
 
 namespace Application.Features.Customers.Commands.Create;
 
-public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>
+public class CreateCustomerCommand : IRequest<CreatedCustomerResponse>, ISecuredRequest, ILoggableRequest
 {
     public string? CustomerNo { get; set; }
     public Guid UserId { get; set; }
+
+    public string[] Roles => new string[] { CustomersOperationClaims.Write, CustomersOperationClaims.Create };
 
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CreatedCustomerResponse>
     {
