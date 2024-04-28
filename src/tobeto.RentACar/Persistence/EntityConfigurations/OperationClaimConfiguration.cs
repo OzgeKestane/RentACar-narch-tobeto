@@ -9,6 +9,7 @@ using NArchitecture.Core.Security.Constants;
 using Application.Features.Customers.Constants;
 using Application.Features.CorporateCustomers.Constants;
 using Application.Features.IndividualCustomers.Constants;
+using Application.Features.Models.Constants;
 
 
 namespace Persistence.EntityConfigurations;
@@ -150,6 +151,20 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
                 new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Create },
                 new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Update },
                 new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
+        
+        #region Models
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = ModelsOperationClaims.Admin },
+                new() { Id = ++lastId, Name = ModelsOperationClaims.Read },
+                new() { Id = ++lastId, Name = ModelsOperationClaims.Write },
+                new() { Id = ++lastId, Name = ModelsOperationClaims.Create },
+                new() { Id = ++lastId, Name = ModelsOperationClaims.Update },
+                new() { Id = ++lastId, Name = ModelsOperationClaims.Delete },
             ]
         );
         #endregion

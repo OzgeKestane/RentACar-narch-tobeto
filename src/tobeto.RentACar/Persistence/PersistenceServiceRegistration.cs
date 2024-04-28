@@ -30,6 +30,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<ICorporateCustomerRepository, CorporateCustomerRepository>();
         services.AddScoped<IIndividualCustomerRepository, IndividualCustomerRepository>();
+        services.AddScoped<IModelRepository, ModelRepository>();
         return services;
     }
 }
