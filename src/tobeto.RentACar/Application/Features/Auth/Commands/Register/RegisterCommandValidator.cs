@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace Application.Features.Auth.Commands.Register;
 
@@ -7,8 +7,8 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
     public RegisterCommandValidator()
     {
-        RuleFor(c => c.UserForRegisterDto.Email).NotEmpty().EmailAddress();
-        RuleFor(c => c.UserForRegisterDto.Password)
+        RuleFor(c => c.RegisterDto.User.Email).NotEmpty().EmailAddress();
+        RuleFor(c => c.RegisterDto.User.Password)
             .NotEmpty()
             .MinimumLength(6)
             .Must(StrongPassword)
