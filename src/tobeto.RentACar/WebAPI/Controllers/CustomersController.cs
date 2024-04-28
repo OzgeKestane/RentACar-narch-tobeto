@@ -1,11 +1,12 @@
+using Application.Features.Customers.AddPicture;
 using Application.Features.Customers.Commands.Create;
 using Application.Features.Customers.Commands.Delete;
 using Application.Features.Customers.Commands.Update;
 using Application.Features.Customers.Queries.GetById;
 using Application.Features.Customers.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
@@ -19,6 +20,13 @@ public class CustomersController : BaseController
         CreatedCustomerResponse response = await Mediator.Send(createCustomerCommand);
 
         return Created(uri: "", response);
+    }
+    [HttpPost("Image")]
+    public async Task<IActionResult> AddImage([FromBody] IFormFile formFile)
+    {
+        AddPictureCommand command = new AddPictureCommand() { File = formFile };
+        var response = await Mediator.Send(command);
+        return Ok(response);
     }
 
     [HttpPut]
