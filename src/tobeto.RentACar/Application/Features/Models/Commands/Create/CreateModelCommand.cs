@@ -3,16 +3,15 @@ using Application.Features.Models.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Models.Constants.ModelsOperationClaims;
 
 namespace Application.Features.Models.Commands.Create;
 
-public class CreateModelCommand : IRequest<CreatedModelResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateModelCommand : IRequest<CreatedModelResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public string Name { get; set; }
     public short Year { get; set; }

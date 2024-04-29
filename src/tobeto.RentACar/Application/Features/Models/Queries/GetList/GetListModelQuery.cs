@@ -1,18 +1,16 @@
-using Application.Features.Models.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Models.Constants.ModelsOperationClaims;
 
 namespace Application.Features.Models.Queries.GetList;
 
-public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -38,7 +36,7 @@ public class GetListModelQuery : IRequest<GetListResponse<GetListModelListItemDt
         {
             IPaginate<Model> models = await _modelRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 

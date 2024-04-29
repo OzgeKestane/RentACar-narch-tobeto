@@ -2,10 +2,11 @@ using Application.Features.Models.Commands.Create;
 using Application.Features.Models.Commands.Delete;
 using Application.Features.Models.Commands.Update;
 using Application.Features.Models.Queries.GetById;
+using Application.Features.Models.Queries.GetDynamic;
 using Application.Features.Models.Queries.GetList;
 using AutoMapper;
-using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
+using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.Models.Profiles;
@@ -23,5 +24,7 @@ public class MappingProfiles : Profile
         CreateMap<Model, GetByIdModelResponse>().ReverseMap();
         CreateMap<Model, GetListModelListItemDto>().ReverseMap();
         CreateMap<IPaginate<Model>, GetListResponse<GetListModelListItemDto>>().ReverseMap();
+        CreateMap<GetDynamicModelItemDto, Model>().ReverseMap().ForMember(i => i.BrandName, opt => opt.MapFrom(j => j.Brand.Name));
+        CreateMap<IPaginate<Model>, GetListResponse<GetDynamicModelItemDto>>().ReverseMap();
     }
 }

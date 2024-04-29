@@ -1,19 +1,17 @@
 using Application.Features.Models.Constants;
-using Application.Features.Models.Constants;
 using Application.Features.Models.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Models.Constants.ModelsOperationClaims;
 
 namespace Application.Features.Models.Commands.Delete;
 
-public class DeleteModelCommand : IRequest<DeletedModelResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteModelCommand : IRequest<DeletedModelResponse>, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
 {
     public Guid Id { get; set; }
 

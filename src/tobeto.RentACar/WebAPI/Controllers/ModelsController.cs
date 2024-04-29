@@ -2,10 +2,12 @@ using Application.Features.Models.Commands.Create;
 using Application.Features.Models.Commands.Delete;
 using Application.Features.Models.Commands.Update;
 using Application.Features.Models.Queries.GetById;
+using Application.Features.Models.Queries.GetDynamic;
 using Application.Features.Models.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
+using NArchitecture.Core.Persistence.Dynamic;
 
 namespace WebAPI.Controllers;
 
@@ -49,6 +51,14 @@ public class ModelsController : BaseController
     {
         GetListModelQuery getListModelQuery = new() { PageRequest = pageRequest };
         GetListResponse<GetListModelListItemDto> response = await Mediator.Send(getListModelQuery);
+        return Ok(response);
+    }
+
+    [HttpPost("dynamic")]
+    public async Task<IActionResult> GetListDynamic([FromQuery] PageRequest pageRequest, [FromBody] DynamicQuery dynamic)
+    {
+        GetDynamicModelQuery query = new() { Dynamic = dynamic, PageRequest = pageRequest };
+        var response = await Mediator.Send(query);
         return Ok(response);
     }
 }
