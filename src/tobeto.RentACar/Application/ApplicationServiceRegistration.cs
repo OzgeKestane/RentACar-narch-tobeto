@@ -1,5 +1,9 @@
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
+using Application.Services.CorporateCustomers;
+using Application.Services.Customers;
+using Application.Services.IndividualCustomers;
+using Application.Services.Models;
 using Application.Services.UsersService;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,11 +22,8 @@ using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
+using NArchitecture.Core.Security.JWT;
 using System.Reflection;
-using Application.Services.Customers;
-using Application.Services.CorporateCustomers;
-using Application.Services.IndividualCustomers;
-using Application.Services.Models;
 
 namespace Application;
 
@@ -32,7 +33,8 @@ public static class ApplicationServiceRegistration
         this IServiceCollection services,
         MailSettings mailSettings,
         FileLogConfiguration fileLogConfiguration,
-        ElasticSearchConfig elasticSearchConfig
+        ElasticSearchConfig elasticSearchConfig,
+        TokenOptions tokenOptions
     )
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -61,7 +63,7 @@ public static class ApplicationServiceRegistration
 
         services.AddYamlResourceLocalization();
 
-        services.AddSecurityServices<Guid, int>();
+        services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
 
         services.AddScoped<ICustomerService, CustomerManager>();

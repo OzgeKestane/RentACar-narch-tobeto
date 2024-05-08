@@ -1,8 +1,6 @@
-using NArchitecture.Core.Security.Attributes;
-
 namespace Application.Features.Models.Constants;
 
-[OperationClaimConstants]
+
 public static class ModelsOperationClaims
 {
     private const string _section = "Models";
